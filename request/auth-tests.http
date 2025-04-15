@@ -1,0 +1,26 @@
+@host = http://localhost:3000
+@contentType = application/json
+
+###
+POST {{host}}/users/register
+Content-Type: {{contentType}}
+
+{
+    "email": "variavel@test.com",
+    "password": "senha123",
+    "name": "Teste Variável"
+}
+
+###
+POST {{host}}/auth/login
+Content-Type: {{contentType}}
+
+{
+    "email": "variavel@test.com",
+    "password": "senha123"
+}
+
+> {% client.global.set("auth_token", response.body.access_token); %}
+### Requisição autenticada
+GET {{host}}/profile
+Authorization: Bearer {{auth_token}}
